@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function UserNav() {
 	return (
 		<nav>
-			<ul className="nav flex-column">
+			<ul className="nav flex-column mt-3	">
 				<li className="nav-item">
 					<Link to="/user/history" className="nav-link">
 						History

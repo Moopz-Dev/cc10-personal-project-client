@@ -10,7 +10,7 @@ import History from "../pages/user/History";
 import Password from "../pages/user/Password";
 import Wishlist from "../pages/user/Wishlist";
 import AdminDashboard from "../pages/admin/AdminDashboard";
-
+import CategoryCreate from "../pages/admin/category/CategoryCreate";
 function UserRoute() {
 	const { user } = useContext(AuthContext);
 	return (
@@ -19,6 +19,7 @@ function UserRoute() {
 				user.role === "admin" ? (
 					<>
 						<Route path="admin/dashboard" element={<AdminDashboard />} />
+						<Route path="admin/category" element={<CategoryCreate />} />
 					</>
 				) : (
 					<>

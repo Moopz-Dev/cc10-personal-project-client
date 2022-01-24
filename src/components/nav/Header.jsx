@@ -65,9 +65,16 @@ function Header() {
 									className="dropdown-menu dropdown-menu-end"
 									aria-labelledby="navbarDropdownMenuLink ">
 									<li>
-										<Link className="dropdown-item" to="/">
-											Action
-										</Link>
+										{user && user.role === "user" && (
+											<Link className="dropdown-item" to="/user/history">
+												Dashboard
+											</Link>
+										)}
+										{user && user.role === "admin" && (
+											<Link className="dropdown-item" to="/admin/dashboard">
+												Dashboard
+											</Link>
+										)}
 									</li>
 									<li>
 										<Link className="dropdown-item" to="/">
