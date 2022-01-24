@@ -8,12 +8,12 @@ import {
 	BsDoorClosed,
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
-
 import { AuthContext } from "../../contexts/AuthContext";
 
 function Header() {
 	const [current, setCurrent] = useState("home");
-	const { logout } = useContext(AuthContext);
+	const { user, logout } = useContext(AuthContext);
+
 	return (
 		<>
 			<nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -32,7 +32,7 @@ function Header() {
 						<span className="navbar-toggler-icon"></span>
 					</button>
 					<div className="collapse navbar-collapse" id="navbarNavDropdown">
-						<ul className="navbar-nav d-flex align-center">
+						<ul className="navbar-nav me-auto mb-2 mb-lg-0">
 							<li className="nav-item ms-2">
 								<Link
 									className={
@@ -44,6 +44,12 @@ function Header() {
 									<BsHouse className="me-1" /> Home
 								</Link>
 							</li>
+						</ul>
+
+						<ul
+							className={
+								"navbar-nav ms-auto me-5 mb-2 mb-lg-0 " + (user ? "" : "d-none")
+							}>
 							<li className="nav-item dropdown ms-2">
 								<Link
 									className={"nav-link dropdown-toggle "}
@@ -52,11 +58,12 @@ function Header() {
 									role="button"
 									data-bs-toggle="dropdown"
 									aria-expanded="false">
-									<BsGear className=" me-1" /> Username
+									<BsGear className=" me-1" />{" "}
+									{user ? user.username : "username"}
 								</Link>
 								<ul
-									className="dropdown-menu"
-									aria-labelledby="navbarDropdownMenuLink">
+									className="dropdown-menu dropdown-menu-end"
+									aria-labelledby="navbarDropdownMenuLink ">
 									<li>
 										<Link className="dropdown-item" to="/">
 											Action
@@ -81,7 +88,14 @@ function Header() {
 									</li>
 								</ul>
 							</li>
-							<li className="nav-item ms-2 float-right">
+						</ul>
+
+						<ul
+							className={
+								"navbar-nav ms-auto me-5 mb-2 mb-lg-0 " +
+								(!user ? "" : "d-none")
+							}>
+							<li className="nav-item ms-2">
 								<Link
 									className={
 										"nav-link " + (current === "login" ? "active" : null)

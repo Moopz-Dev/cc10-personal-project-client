@@ -6,7 +6,6 @@ import { setToken, clearToken, getToken } from "../services/localStorage";
 import { ToastContext } from "./ToastContext";
 import { ErrorContext } from "./ErrorContext";
 import { LoadingContext } from "./LoadingContext";
-// import jwtDecode from "jwt-decode";
 
 const AuthContext = createContext();
 
@@ -19,11 +18,20 @@ function AuthContextProvider({ children }) {
 	useEffect(() => {
 		if (getToken()) {
 			axios
-				.get("api/users/me")
+				.get("api/user/me")
 				.then(res => setUser(res.data.user))
 				.catch(err => console.log(err));
 		}
 	}, []);
+
+	const roleBasedRedirect = res => {
+		if (res.data.user.role === "admin") {
+			navigate("admin/dashboard");
+		} else {
+			navigate("user/history");
+		}
+	};
+
 	const login = async (emailOrPhoneNumber, password) => {
 		try {
 			setLoading(true);
@@ -35,8 +43,10 @@ function AuthContextProvider({ children }) {
 			setToken(res.data.token);
 			setUser(res.data.user);
 			setLoading(false);
-			navigate("/");
+			roleBasedRedirect(res);
+			// window.location.reload();
 		} catch (error) {
+			console.log(error);
 			setError("invalid email, phone number or password");
 			setLoading(false);
 		}
@@ -46,6 +56,7 @@ function AuthContextProvider({ children }) {
 		clearToken();
 		setUser(null);
 		setMessage("You are logged out");
+		navigate("/login");
 	};
 
 	const updateUser = value => {
