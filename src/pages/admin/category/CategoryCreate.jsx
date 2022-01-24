@@ -3,11 +3,15 @@ import AdminNav from "../../../components/nav/AdminNav";
 import { ToastContext } from "../../../contexts/ToastContext";
 import { LoadingContext } from "../../../contexts/LoadingContext";
 import { ErrorContext } from "../../../contexts/ErrorContext";
+import { Link } from "react-router-dom";
+import { BsPen, BsTrash } from "react-icons/bs";
 import {
 	createCategory,
 	getAllCategory,
 	deleteCategory,
 } from "../../../apis/category";
+import CategoryForm from "../../../components/nav/forms/CategoryForm";
+import LocalSearch from "../../../components/nav/forms/LocalSearch";
 
 function CategoryCreate() {
 	const [name, setName] = useState("");
@@ -15,6 +19,8 @@ function CategoryCreate() {
 	const { setMessage } = useContext(ToastContext);
 	const { setLoading } = useContext(LoadingContext);
 	const { setError } = useContext(ErrorContext);
+
+	const [keyword, setKeyword] = useState("");
 
 	useEffect(() => {
 		loadCategory();
@@ -32,11 +38,31 @@ function CategoryCreate() {
 			setLoading(false);
 			setName("");
 			setMessage(res.data.name + " category has been created.");
+			loadCategory();
 		} catch (err) {
 			setLoading(false);
 			setError(err.response.data.message);
 		}
 	};
+
+	const handleDelete = async slug => {
+		let answer = window.confirm("Confirm deleting " + slug + "?");
+		setLoading(true);
+		if (answer) {
+			try {
+				await deleteCategory(slug);
+				setLoading(false);
+				setMessage("Category " + slug + " deleted.");
+				loadCategory();
+			} catch (err) {
+				setLoading(false);
+				setError(err.response.data.message);
+			}
+		}
+	};
+
+	const searched = keyword => item => item.name.toLowerCase().includes(keyword);
+
 	return (
 		<div className="container-fluid">
 			<div className="row">
@@ -45,22 +71,35 @@ function CategoryCreate() {
 				</div>
 				<div className="col">
 					<h4>Create Category</h4>
-					<form onSubmit={handleSubmit}>
-						<div className="form-group">
-							<label>Name</label>
-							<input
-								type="text"
-								className="form-control"
-								value={name}
-								onChange={e => setName(e.target.value)}
-								autoFocus
-								required
-							/>
-							<button className="btn btn-outlined-primary">Save</button>
-						</div>
-					</form>
+					{
+						<CategoryForm
+							handleSubmit={handleSubmit}
+							name={name}
+							setName={setName}
+						/>
+					}
+
+					<LocalSearch keyword={keyword} setKeyword={setKeyword} />
+
 					<hr />
-					{JSON.stringify(categories)}
+
+					{categories.filter(searched(keyword)).map(item => (
+						<div className="alert alert-secondary" key={item.id}>
+							{item.name}
+
+							<span
+								role="button"
+								onClick={() => handleDelete(item.slug)}
+								className="float-end mx-2">
+								<BsTrash className="text-danger" />
+							</span>
+							<Link to={"/admin/category/" + item.slug}>
+								<span className="float-end mx-2">
+									<BsPen className="text-warning" />
+								</span>
+							</Link>
+						</div>
+					))}
 				</div>
 			</div>
 		</div>

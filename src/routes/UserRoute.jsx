@@ -11,6 +11,7 @@ import Password from "../pages/user/Password";
 import Wishlist from "../pages/user/Wishlist";
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import CategoryCreate from "../pages/admin/category/CategoryCreate";
+import CategoryUpdate from "../pages/admin/category/CategoryUpdate";
 function UserRoute() {
 	const { user } = useContext(AuthContext);
 	return (
@@ -20,6 +21,7 @@ function UserRoute() {
 					<>
 						<Route path="admin/dashboard" element={<AdminDashboard />} />
 						<Route path="admin/category" element={<CategoryCreate />} />
+						<Route path="admin/category/:slug" element={<CategoryUpdate />} />
 					</>
 				) : (
 					<>
