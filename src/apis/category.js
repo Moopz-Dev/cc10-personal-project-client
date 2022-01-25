@@ -19,3 +19,7 @@ export const updateCategory = async (slug, category) => {
 export const deleteCategory = async slug => {
 	return await axios.delete("/api/category/" + slug);
 };
+
+export const getCategorySub = async id => {
+	return await axios.get("/api/category/sub/" + id);
+};

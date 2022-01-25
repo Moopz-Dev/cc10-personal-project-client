@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { useContext } from "react";
 
@@ -14,6 +14,7 @@ import CategoryCreate from "../pages/admin/category/CategoryCreate";
 import CategoryUpdate from "../pages/admin/category/CategoryUpdate";
 import SubCreate from "../pages/admin/sub/SubCreate";
 import SubUpdate from "../pages/admin/sub/SubUpdate";
+import ProductCreate from "../pages/admin/product/ProductCreate";
 function UserRoute() {
 	const { user } = useContext(AuthContext);
 	return (
@@ -26,6 +27,7 @@ function UserRoute() {
 						<Route path="admin/category/:slug" element={<CategoryUpdate />} />
 						<Route path="admin/sub" element={<SubCreate />} />
 						<Route path="admin/sub/:slug" element={<SubUpdate />} />
+						<Route path="admin/product" element={<ProductCreate />} />
 					</>
 				) : (
 					<>
@@ -41,7 +43,7 @@ function UserRoute() {
 				</>
 			)}
 			<Route path="/" element={<Home />} />
-			<Route path="*" element={<Navigate to="/" />} />
+			{/* <Route path="*" element={<Navigate to="/" />} /> */}
 		</Routes>
 	);
 }
