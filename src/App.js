@@ -10,18 +10,20 @@ import Spinner from "./utils/Spinner";
 import UserRoute from "./routes/UserRoute";
 
 function App() {
-	const { error } = useContext(ErrorContext);
-	const { message } = useContext(ToastContext);
+	const { error, setError } = useContext(ErrorContext);
+	const { message, setMessage } = useContext(ToastContext);
 	const { loading } = useContext(LoadingContext);
 
 	useEffect(() => {
-		if (error) {
+		if (error && error !== "") {
 			toast.error(error);
+			return setError("");
 		}
 	}, [error]);
 	useEffect(() => {
-		if (message) {
+		if (message && message !== "") {
 			toast.success(message);
+			return setMessage("");
 		}
 	}, [message]);
 	return (

@@ -17,7 +17,7 @@ function CategoryUpdate() {
 	const navigate = useNavigate();
 
 	let { slug } = useParams();
-	console.log(slug);
+
 	useEffect(() => {
 		loadCategory();
 	}, []);
