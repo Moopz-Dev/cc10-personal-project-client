@@ -14,6 +14,7 @@ import {
 // import CategoryForm from "../../../components/nav/forms/CategoryForm";
 // import LocalSearch from "../../../components/nav/forms/LocalSearch";
 import ProductCreateForm from "../../../components/nav/forms/ProductCreateForm";
+import FileUpload from "../../../components/nav/forms/FileUpload";
 
 const initialState = {
 	title: "",
@@ -106,13 +107,17 @@ function ProductCreate() {
 				<div className="col-md-10">
 					<h4>Product Create</h4>
 					<hr />
+					<div className="p-3">
+						<FileUpload values={values} setValues={setValues} />
+					</div>
+
 					<ProductCreateForm
 						handleSubmit={handleSubmit}
 						handleChange={handleChange}
 						handleCategoryChange={handleCategoryChange}
 						values={values}
 					/>
-					{JSON.stringify(values)}
+					{JSON.stringify(values.images)}
 				</div>
 			</div>
 		</div>
