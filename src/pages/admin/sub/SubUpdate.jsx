@@ -9,7 +9,7 @@ import { ErrorContext } from "../../../contexts/ErrorContext";
 
 import { getAllCategory } from "../../../apis/category";
 import { getOneSubCategory, updateSubCategory } from "../../../apis/sub";
-import CategoryForm from "../../../components/nav/forms/CategoryForm";
+import CategoryForm from "../../../components/forms/CategoryForm";
 
 function SubUpdate() {
 	const [name, setName] = useState("");

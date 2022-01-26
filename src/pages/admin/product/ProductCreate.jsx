@@ -3,18 +3,12 @@ import AdminNav from "../../../components/nav/AdminNav";
 import { ToastContext } from "../../../contexts/ToastContext";
 import { LoadingContext } from "../../../contexts/LoadingContext";
 import { ErrorContext } from "../../../contexts/ErrorContext";
-import { Link } from "react-router-dom";
-import { BsPen, BsTrash } from "react-icons/bs";
+
 import { getAllCategory, getCategorySub } from "../../../apis/category";
-import {
-	createProduct,
-	getAllProduct,
-	deleteProduct,
-} from "../../../apis/product";
-// import CategoryForm from "../../../components/nav/forms/CategoryForm";
-// import LocalSearch from "../../../components/nav/forms/LocalSearch";
-import ProductCreateForm from "../../../components/nav/forms/ProductCreateForm";
-import FileUpload from "../../../components/nav/forms/FileUpload";
+import { createProduct } from "../../../apis/product";
+
+import ProductCreateForm from "../../../components/forms/ProductCreateForm";
+import FileUpload from "../../../components/forms/FileUpload";
 
 const initialState = {
 	title: "",
@@ -23,7 +17,6 @@ const initialState = {
 	categories: [],
 	category: "",
 	subs: [],
-	sub: "",
 	quantity: "",
 	images: [],
 	brands: [
@@ -117,7 +110,6 @@ function ProductCreate() {
 						handleCategoryChange={handleCategoryChange}
 						values={values}
 					/>
-					{JSON.stringify(values.images)}
 				</div>
 			</div>
 		</div>

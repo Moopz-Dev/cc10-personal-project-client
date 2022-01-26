@@ -14,13 +14,13 @@ function ProductCreateForm({
 		categories,
 		category,
 		subs,
-		subCategoryId,
+		// subCategoryId,
 		quantity,
-		images,
+		// images,
 		brands,
 		colors,
-		brand,
-		color,
+		// brand,
+		// color,
 	} = values;
 	return (
 		<form onSubmit={handleSubmit}>

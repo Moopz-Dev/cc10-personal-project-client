@@ -1,7 +1,7 @@
 import axios from "../config/axios";
 
-export const getAllProduct = async () => {
-	return await axios.get("/api/product");
+export const getSomeProduct = async count => {
+	return await axios.get("/api/product/" + count);
 };
 
 export const getOneProduct = async slug => {

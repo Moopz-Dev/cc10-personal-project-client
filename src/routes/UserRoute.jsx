@@ -15,6 +15,7 @@ import CategoryUpdate from "../pages/admin/category/CategoryUpdate";
 import SubCreate from "../pages/admin/sub/SubCreate";
 import SubUpdate from "../pages/admin/sub/SubUpdate";
 import ProductCreate from "../pages/admin/product/ProductCreate";
+import AllProducts from "../pages/admin/product/AllProducts";
 function UserRoute() {
 	const { user } = useContext(AuthContext);
 	return (
@@ -28,6 +29,7 @@ function UserRoute() {
 						<Route path="admin/sub" element={<SubCreate />} />
 						<Route path="admin/sub/:slug" element={<SubUpdate />} />
 						<Route path="admin/product" element={<ProductCreate />} />
+						<Route path="admin/products" element={<AllProducts />} />
 					</>
 				) : (
 					<>

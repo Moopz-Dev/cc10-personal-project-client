@@ -12,8 +12,8 @@ import {
 	getAllSubCategory,
 	deleteSubCategory,
 } from "../../../apis/sub";
-import CategoryForm from "../../../components/nav/forms/CategoryForm";
-import LocalSearch from "../../../components/nav/forms/LocalSearch";
+import CategoryForm from "../../../components/forms/CategoryForm";
+import LocalSearch from "../../../components/forms/LocalSearch";
 
 function SubCreate() {
 	const [name, setName] = useState("");

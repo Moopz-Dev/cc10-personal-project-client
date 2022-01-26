@@ -8,7 +8,10 @@ function AdminDashboard() {
 				<div className="col-md-2">
 					<AdminNav />
 				</div>
-				<div className="col">Admin Dashboard Page</div>
+
+				<div className="col-md-10">
+					<h4>Admin Dashboard</h4>
+				</div>
 			</div>
 		</div>
 	);

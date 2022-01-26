@@ -10,8 +10,8 @@ import {
 	getAllCategory,
 	deleteCategory,
 } from "../../../apis/category";
-import CategoryForm from "../../../components/nav/forms/CategoryForm";
-import LocalSearch from "../../../components/nav/forms/LocalSearch";
+import CategoryForm from "../../../components/forms/CategoryForm";
+import LocalSearch from "../../../components/forms/LocalSearch";
 
 function CategoryCreate() {
 	const [name, setName] = useState("");

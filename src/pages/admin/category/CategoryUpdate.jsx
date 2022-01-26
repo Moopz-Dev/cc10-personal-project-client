@@ -5,7 +5,7 @@ import { LoadingContext } from "../../../contexts/LoadingContext";
 import { ErrorContext } from "../../../contexts/ErrorContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { getOneCategory, updateCategory } from "../../../apis/category";
-import CategoryForm from "../../../components/nav/forms/CategoryForm";
+import CategoryForm from "../../../components/forms/CategoryForm";
 
 function CategoryUpdate() {
 	const [name, setName] = useState("");

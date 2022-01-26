@@ -1,9 +1,9 @@
 import React from "react";
 import { useContext } from "react";
 import Resizer from "react-image-file-resizer";
-import axios from "../../../config/axios";
-import { LoadingContext } from "../../../contexts/LoadingContext";
-import { ErrorContext } from "../../../contexts/ErrorContext";
+import axios from "../../config/axios";
+import { LoadingContext } from "../../contexts/LoadingContext";
+import { ErrorContext } from "../../contexts/ErrorContext";
 
 function FileUpload({ values, setValues }) {
 	const { setLoading } = useContext(LoadingContext);
@@ -56,7 +56,11 @@ function FileUpload({ values, setValues }) {
 						<div
 							className=" d-inline col-md-3 my-2 position-relative "
 							key={item.url}>
-							<img src={item.imageUrl} className="img-thumbnail " />
+							<img
+								src={item.imageUrl}
+								className="img-thumbnail"
+								alt={item.imageUrl}
+							/>
 							<span
 								className="position-absolute top-5 start-95 translate-middle badge rounded-pill bg-danger"
 								role="button"
