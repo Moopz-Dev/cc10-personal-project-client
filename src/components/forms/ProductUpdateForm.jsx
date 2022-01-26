@@ -1,29 +1,28 @@
 import React from "react";
 
-function ProductCreateForm({
+function ProductUpdateForm({
 	handleSubmit,
 	handleChange,
 	handleCategoryChange,
 	values,
-	showSubs,
+	categories,
+	subs,
 }) {
 	const {
 		title,
 		description,
+		subCategoryId,
 		price,
-		categories,
 		category,
-		subs,
-		// subCategoryId,
 		quantity,
-		// images,
 		brands,
 		colors,
-		// brand,
-		// color,
+		brand,
+		color,
 	} = values;
 	return (
 		<form onSubmit={handleSubmit}>
+			{/* {JSON.stringify(values.SubCategory.categoryId)} */}
 			<div className="form-group">
 				<label>Title</label>
 				<input
@@ -66,8 +65,11 @@ function ProductCreateForm({
 			</div>
 			<div className="form-group">
 				<label>Color</label>
-				<select name="color" className="form-select" onChange={handleChange}>
-					<option>Please Select</option>
+				<select
+					name="color"
+					value={color}
+					className="form-select"
+					onChange={handleChange}>
 					{colors.map(item => (
 						<option key={item} value={item}>
 							{item}
@@ -77,8 +79,11 @@ function ProductCreateForm({
 			</div>
 			<div className="form-group">
 				<label>Brand</label>
-				<select name="brand" className="form-select" onChange={handleChange}>
-					<option>Please Select</option>
+				<select
+					name="brand"
+					value={brand}
+					className="form-select"
+					onChange={handleChange}>
 					{brands.map(item => (
 						<option key={item} value={item}>
 							{item}
@@ -86,13 +91,14 @@ function ProductCreateForm({
 					))}
 				</select>
 			</div>
+
 			<div className="form-group">
 				<label>Category</label>
 				<select
 					name="category"
 					className="form-select"
+					value={category}
 					onChange={handleCategoryChange}>
-					<option value="">Please Select Category</option>
 					{categories.length > 0 &&
 						categories.map(item => (
 							<option key={item.id} value={item.id}>
@@ -101,27 +107,29 @@ function ProductCreateForm({
 						))}
 				</select>
 			</div>
-			{category && (
-				<div className="form-group">
-					<label>Subcategory</label>
-					<select
-						name="subCategoryId"
-						className="form-select"
-						onChange={handleChange}>
-						<option value="">Please Select Subcategory</option>
-						{subs.length > 0 &&
-							subs.map(item => (
-								<option key={item.id} value={item.id}>
-									{item.name}
-								</option>
-							))}
-					</select>
-				</div>
-			)}
+
+			<div className="form-group">
+				<label>Subcategory</label>
+				<select
+					name="subCategoryId"
+					className="form-select"
+					value={subCategoryId}
+					onChange={handleChange}>
+					<option value={""}>Select a subcategory</option>
+					{subs &&
+						subs.length > 0 &&
+						subs.map(item => (
+							<option key={item.id} value={item.id}>
+								{item.name}
+							</option>
+						))}
+				</select>
+			</div>
+
 			<br />
 			<button className="btn btn-outline-info">Save</button>
 		</form>
 	);
 }
 
-export default ProductCreateForm;
+export default ProductUpdateForm;

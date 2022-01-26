@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import { getSomeProduct } from "../../../apis/product";
-import { useState } from "react";
-import { useContext } from "react";
 import { LoadingContext } from "../../../contexts/LoadingContext";
-import { useEffect } from "react";
+import { ErrorContext } from "../../../contexts/ErrorContext";
 import AdminProductCard from "../../../components/cards/AdminProductCard";
+import { deleteProduct } from "../../../apis/product";
+import { ToastContext } from "../../../contexts/ToastContext";
 
 function AllProducts() {
 	const [products, setProducts] = useState([]);
 	const { loading, setLoading } = useContext(LoadingContext);
+	const { setError } = useContext(ErrorContext);
+	const { setMessage } = useContext(ToastContext);
 	useEffect(() => {
 		loadAllProducts();
 	}, []);
@@ -25,6 +27,22 @@ function AllProducts() {
 				setLoading(false);
 			});
 	};
+	const handleRemove = slug => {
+		if (
+			window.confirm(
+				"Delete this product? All associated images and cart items will also be deleted."
+			)
+		) {
+			deleteProduct(slug)
+				.then(res => {
+					loadAllProducts();
+					setMessage("Successfully deleted.");
+				})
+				.catch(err => {
+					setError(err.response.data.message);
+				});
+		}
+	};
 	return (
 		<div className="container-fluid">
 			<div className="row">
@@ -37,7 +55,7 @@ function AllProducts() {
 						{loading || <h4>All Products</h4>}
 						{products.map(item => (
 							<div className="col-md-4 my-2" key={item.id}>
-								<AdminProductCard product={item} />
+								<AdminProductCard product={item} handleRemove={handleRemove} />
 							</div>
 						))}
 					</div>

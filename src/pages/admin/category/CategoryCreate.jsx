@@ -71,14 +71,13 @@ function CategoryCreate() {
 				</div>
 				<div className="col">
 					<h4>Create Category</h4>
-					{
-						<CategoryForm
-							handleSubmit={handleSubmit}
-							name={name}
-							setName={setName}
-						/>
-					}
 
+					<CategoryForm
+						handleSubmit={handleSubmit}
+						name={name}
+						setName={setName}
+					/>
+					<br />
 					<LocalSearch keyword={keyword} setKeyword={setKeyword} />
 
 					<hr />

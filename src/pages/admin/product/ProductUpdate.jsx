@@ -3,20 +3,24 @@ import AdminNav from "../../../components/nav/AdminNav";
 import { ToastContext } from "../../../contexts/ToastContext";
 import { LoadingContext } from "../../../contexts/LoadingContext";
 import { ErrorContext } from "../../../contexts/ErrorContext";
-
-import { getAllCategory, getCategorySub } from "../../../apis/category";
-import { createProduct } from "../../../apis/product";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+	getOneCategory,
+	getAllCategory,
+	getCategorySub,
+} from "../../../apis/category";
+import { updateProduct, getOneProduct } from "../../../apis/product";
 
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import FileUpload from "../../../components/forms/FileUpload";
+import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
 
 const initialState = {
 	title: "",
 	description: "",
 	price: "",
-	categories: [],
 	category: "",
-	subs: [],
+	subCategoryId: "",
 	quantity: "",
 	images: [],
 	brands: [
@@ -44,37 +48,67 @@ const initialState = {
 	color: "",
 };
 
-function ProductCreate() {
+function ProductUpdate() {
 	const [values, setValues] = useState(initialState);
+	const [categories, setCategories] = useState({});
+	const [subs, setSubs] = useState({});
+	const { slug } = useParams();
 	const { setLoading } = useContext(LoadingContext);
 	const { setError } = useContext(ErrorContext);
 	const { setMessage } = useContext(ToastContext);
 
 	useEffect(() => {
+		loadProduct();
+	}, []);
+
+	useEffect(() => {
 		loadCategory();
+	}, []);
+
+	useEffect(() => {
 		if (values.category) {
-			getCategorySub(values.category)
-				.then(res => {
-					setValues({ ...values, subs: res.data });
-				})
-				.catch(err => setError(err));
+			loadSubs();
 		}
 	}, [values.category]);
 
-	const loadCategory = () => {
-		setLoading(true);
-		getAllCategory().then(res =>
-			setValues({ ...values, categories: res.data })
+	const loadProduct = () => {
+		getOneProduct(slug).then(res =>
+			setValues({
+				...values,
+				...res.data,
+				category: res.data.SubCategory.categoryId,
+				subCategoryId: res.data.SubCategory.id,
+				images: res.data.ProductImages,
+			})
 		);
-		setLoading(false);
+	};
+
+	const loadCategory = async () => {
+		try {
+			const categories = await getAllCategory();
+			setCategories(categories.data);
+			if (values.category) {
+			}
+		} catch (error) {
+			setError(error);
+		}
+	};
+
+	const loadSubs = async () => {
+		try {
+			const subs = await getCategorySub(values.category);
+			setSubs(subs.data);
+		} catch (error) {
+			setError(error);
+		}
 	};
 
 	const handleSubmit = e => {
-		setLoading(true);
 		e.preventDefault();
-		createProduct(values)
+		setLoading(true);
+		updateProduct(slug, values)
 			.then(res => {
-				setMessage("Product has been created.");
+				setMessage("Product has been Updated.");
 				window.location.reload();
 			})
 
@@ -88,7 +122,7 @@ function ProductCreate() {
 
 	const handleCategoryChange = e => {
 		e.preventDefault();
-		setValues({ ...values, category: e.target.value });
+		setValues({ ...values, category: e.target.value, subCategoryId: "" });
 	};
 	return (
 		<div className="container-fluid">
@@ -97,22 +131,26 @@ function ProductCreate() {
 					<AdminNav />
 				</div>
 				<div className="col-md-10">
-					<h4>Product Create</h4>
-					<hr />
+					<h4>Product Update</h4>
 					<div className="p-3">
 						<FileUpload values={values} setValues={setValues} />
 					</div>
 
-					<ProductCreateForm
+					<ProductUpdateForm
 						handleSubmit={handleSubmit}
 						handleChange={handleChange}
 						handleCategoryChange={handleCategoryChange}
 						values={values}
+						categories={categories}
+						subs={subs}
 					/>
+
+					{/* {JSON.stringify(values)} */}
+					<hr />
 				</div>
 			</div>
 		</div>
 	);
 }
 
-export default ProductCreate;
+export default ProductUpdate;

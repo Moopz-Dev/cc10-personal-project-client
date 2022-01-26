@@ -84,6 +84,7 @@ function SubUpdate() {
 								))}
 						</select>
 					</div>
+					<br />
 					<CategoryForm
 						handleSubmit={handleSubmit}
 						name={name}

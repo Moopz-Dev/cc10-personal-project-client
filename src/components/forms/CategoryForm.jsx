@@ -13,6 +13,7 @@ function CategoryForm({ handleSubmit, setName, name }) {
 					autoFocus
 					required
 				/>
+				<br />
 				<button className="btn btn-outlined-primary">Save</button>
 			</div>
 		</form>

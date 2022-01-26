@@ -96,12 +96,13 @@ function SubCreate() {
 								))}
 						</select>
 					</div>
+					<br />
 					<CategoryForm
 						handleSubmit={handleSubmit}
 						name={name}
 						setName={setName}
 					/>
-
+					<br />
 					<LocalSearch keyword={keyword} setKeyword={setKeyword} />
 
 					<hr />
