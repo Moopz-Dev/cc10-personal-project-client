@@ -3,5 +3,9 @@ body {
 }
 
 body {
-	background-image: linear-gradient(90deg, #fcfcfc, #eeeeee);
+	background: #eeeeee;
 }
+
+/* .jumbotron {
+	background-image: linear-gradient(180deg, #bebebe, #eeeeee);
+} */

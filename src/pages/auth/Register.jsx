@@ -52,7 +52,7 @@ function Register() {
 
 		try {
 			setLoading(true);
-			await axios.post("api/register", {
+			await axios.post("/register", {
 				username,
 				email,
 				phoneNumber,

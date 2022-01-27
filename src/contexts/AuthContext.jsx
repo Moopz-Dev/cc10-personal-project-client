@@ -18,7 +18,7 @@ function AuthContextProvider({ children }) {
 	useEffect(() => {
 		if (getToken()) {
 			axios
-				.get("api/user/me")
+				.get("/user/me")
 				.then(res => setUser(res.data.user))
 				.catch(err => console.log(err));
 		}
@@ -35,7 +35,7 @@ function AuthContextProvider({ children }) {
 	const login = async (emailOrPhoneNumber, password) => {
 		try {
 			setLoading(true);
-			const res = await axios.post("api/login", {
+			const res = await axios.post("/login", {
 				emailOrPhoneNumber,
 				password,
 			});
