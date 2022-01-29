@@ -22,7 +22,9 @@ function Pagination({ page, setPage, productNumber }) {
 			</li>
 			{pages &&
 				pages.map(item => (
-					<li className={"page-item " + (page === item ? "disabled" : null)}>
+					<li
+						key={item}
+						className={"page-item " + (page === item ? "disabled" : null)}>
 						<a
 							className="page-link"
 							href="/"

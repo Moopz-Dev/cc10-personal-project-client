@@ -46,83 +46,82 @@ function Header() {
 							</li>
 						</ul>
 
-						<ul
-							className={
-								"navbar-nav ms-auto me-5 mb-2 mb-lg-0 " + (user ? "" : "d-none")
-							}>
-							<li className="nav-item dropdown ms-2">
-								<Link
-									className={"nav-link dropdown-toggle "}
-									to="/"
-									id="navbarDropdownMenuLink"
-									role="button"
-									data-bs-toggle="dropdown"
-									aria-expanded="false">
-									<BsGear className=" me-1" />{" "}
-									{user ? user.username : "username"}
-								</Link>
-								<ul
-									className="dropdown-menu dropdown-menu-end"
-									aria-labelledby="navbarDropdownMenuLink ">
-									<li>
-										{user && user.role === "user" && (
-											<Link className="dropdown-item" to="/user/history">
-												Dashboard
+						{user ? (
+							<ul className={"navbar-nav ms-auto me-5 mb-2 mb-lg-0 "}>
+								<li className="nav-item dropdown ms-2">
+									<Link
+										className={"nav-link dropdown-toggle "}
+										to="/"
+										id="navbarDropdownMenuLink"
+										role="button"
+										data-bs-toggle="dropdown"
+										aria-expanded="false">
+										<BsGear className=" me-1" />{" "}
+										{user ? user.username : "username"}
+									</Link>
+									<ul
+										className="dropdown-menu dropdown-menu-end"
+										aria-labelledby="navbarDropdownMenuLink ">
+										<li>
+											{user && user.role === "user" && (
+												<Link className="dropdown-item" to="/user/history">
+													Dashboard
+												</Link>
+											)}
+											{user && user.role === "admin" && (
+												<Link className="dropdown-item" to="/admin/dashboard">
+													Dashboard
+												</Link>
+											)}
+										</li>
+										<li>
+											<Link className="dropdown-item" to="/">
+												Another action
 											</Link>
-										)}
-										{user && user.role === "admin" && (
-											<Link className="dropdown-item" to="/admin/dashboard">
-												Dashboard
+										</li>
+										<li>
+											<Link
+												className="dropdown-item"
+												to="/"
+												role="button"
+												onClick={e => {
+													e.preventDefault();
+													logout();
+												}}>
+												<BsDoorClosed className=" me-1" /> Logout
 											</Link>
-										)}
-									</li>
-									<li>
-										<Link className="dropdown-item" to="/">
-											Another action
-										</Link>
-									</li>
-									<li>
-										<Link
-											className="dropdown-item"
-											to="/"
-											role="button"
-											onClick={e => {
-												e.preventDefault();
-												logout();
-											}}>
-											<BsDoorClosed className=" me-1" /> Logout
-										</Link>
-									</li>
-								</ul>
-							</li>
-						</ul>
-
-						<ul
-							className={
-								"navbar-nav ms-auto me-5 mb-2 mb-lg-0 " +
-								(!user ? "" : "d-none")
-							}>
-							<li className="nav-item ms-2">
-								<Link
-									className={
-										"nav-link " + (current === "login" ? "active" : null)
-									}
-									to="/login"
-									onClick={e => setCurrent("login")}>
-									<BsPerson className="me-1" /> Login
-								</Link>
-							</li>
-							<li className="nav-item ms-2">
-								<Link
-									className={
-										"nav-link " + (current === "register" ? "active" : null)
-									}
-									to="/register"
-									onClick={e => setCurrent("register")}>
-									<BsPersonPlus className="me-1" /> Register
-								</Link>
-							</li>
-						</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						) : (
+							<ul
+								className={
+									"navbar-nav ms-auto me-5 mb-2 mb-lg-0 " +
+									(!user ? "" : "d-none")
+								}>
+								<li className="nav-item ms-2">
+									<Link
+										className={
+											"nav-link " + (current === "login" ? "active" : null)
+										}
+										to="/login"
+										onClick={e => setCurrent("login")}>
+										<BsPerson className="me-1" /> Login
+									</Link>
+								</li>
+								<li className="nav-item ms-2">
+									<Link
+										className={
+											"nav-link " + (current === "register" ? "active" : null)
+										}
+										to="/register"
+										onClick={e => setCurrent("register")}>
+										<BsPersonPlus className="me-1" /> Register
+									</Link>
+								</li>
+							</ul>
+						)}
 					</div>
 				</div>
 			</nav>

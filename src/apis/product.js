@@ -15,11 +15,11 @@ export const createProduct = async product => {
 };
 
 export const updateProduct = async (slug, product) => {
-	return await axios.put("/product/" + slug, { ...product });
+	return await axios.put("/product/update/" + slug, { ...product });
 };
 
 export const deleteProduct = async slug => {
-	return await axios.delete("/product/" + slug);
+	return await axios.delete("/product/delete/" + slug);
 };
 
 export const getAllProduct = async (order, asc, page) => {
@@ -29,4 +29,16 @@ export const getAllProduct = async (order, asc, page) => {
 
 export const getProductNumber = async () => {
 	return await axios.get("/product/total");
+};
+
+export const rateProduct = async (slug, star) => {
+	return await axios.put("/product/star/" + slug, { star });
+};
+
+export const getOneProductRating = async slug => {
+	return await axios.get("/star/" + slug);
+};
+
+export const getRelatedProducts = async slug => {
+	return await axios.get("/related-products/" + slug);
 };

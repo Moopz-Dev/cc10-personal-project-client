@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { useContext } from "react";
+import { getRole } from "../services/localStorage";
 
 import Home from "../pages/Home";
 import Login from "../pages/auth/Login";
@@ -17,12 +18,16 @@ import SubUpdate from "../pages/admin/sub/SubUpdate";
 import ProductCreate from "../pages/admin/product/ProductCreate";
 import AllProducts from "../pages/admin/product/AllProducts";
 import ProductUpdate from "../pages/admin/product/ProductUpdate";
+import Product from "../pages/Product";
+import CategoryHome from "../pages/category/CategoryHome";
 function UserRoute() {
 	const { user } = useContext(AuthContext);
+	const role = getRole();
+
 	return (
 		<Routes>
-			{user ? (
-				user.role === "admin" ? (
+			{role &&
+				(role === "admin" ? (
 					<>
 						<Route path="admin/dashboard" element={<AdminDashboard />} />
 						<Route path="admin/category" element={<CategoryCreate />} />
@@ -39,13 +44,11 @@ function UserRoute() {
 						<Route path="user/password" element={<Password />} />
 						<Route path="user/wishlist" element={<Wishlist />} />
 					</>
-				)
-			) : (
-				<>
-					<Route path="login" element={<Login />} />
-					<Route path="register" element={<Register />} />
-				</>
-			)}
+				))}
+			<Route path="login" element={<Login />} />
+			<Route path="register" element={<Register />} />
+			<Route path="/product/:slug" element={<Product />} />
+			<Route path="/category/:slug" element={<CategoryHome />} />
 			<Route path="/" element={<Home />} />
 			{/* <Route path="*" element={<Navigate to="/" />} /> */}
 		</Routes>
