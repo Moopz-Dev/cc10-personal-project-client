@@ -43,8 +43,12 @@ export const getRelatedProducts = async slug => {
 	return await axios.get("/related-products/" + slug);
 };
 
+export const getProductsBySearch = async args => {
+	return await axios.post("/products/search", args);
+};
+
 export const getProductsByFilter = async args => {
-	return await axios.post("/products/filters", args);
+	return await axios.post("/products/filter", args);
 };
 
 export const getProductBrands = async () => {

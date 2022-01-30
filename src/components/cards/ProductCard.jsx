@@ -8,11 +8,18 @@ import placeholder from "../../images/ProductPlaceholder.jpg";
 function ProductCard({ product }) {
 	const {
 		title,
-		description,
+		price,
 		slug,
 		ProductImages: images,
 		ProductRatings: ratings,
 	} = product;
+
+	const cart = [];
+
+	const handleAddToCart = () => {
+		cart.push({ ...product, count: 1 });
+	};
+
 	return (
 		<>
 			<StarRating name={slug} ratings={ratings} />
@@ -25,9 +32,7 @@ function ProductCard({ product }) {
 				/>
 				<div className="card-body">
 					<h6 className="card-title">{`${title && title.slice(0, 30)}`}</h6>
-					<p className="card-text">{`${
-						description && description.slice(0, 40)
-					}...`}</p>
+					<p className="card-text"> $ {price}</p>
 					<hr />
 					<div className=" d-flex">
 						<Link
@@ -39,8 +44,7 @@ function ProductCard({ product }) {
 						<div className="vr" />
 						<button
 							className="btn btn-danger col-md-5 m-auto "
-							// onClick={() => handleRemove(slug)}
-						>
+							onClick={handleAddToCart}>
 							<BsCart4 />
 							<div className="text-capitalize">Add to Cart</div>
 						</button>

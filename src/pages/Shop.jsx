@@ -3,22 +3,29 @@ import { useSearchParams } from "react-router-dom";
 import { BsBootstrap, BsBorderAll, BsCashCoin } from "react-icons/bs";
 import {
 	getSomeProduct,
-	getProductsByFilter,
+	getProductsBySearch,
 	getProductBrands,
+	getProductsByFilter,
 } from "../apis/product";
 import ProductCard from "../components/cards/ProductCard";
 import { LoadingContext } from "../contexts/LoadingContext";
 import { SearchContext } from "../contexts/SearchContext";
 import { getAllCategory } from "../apis/category";
+import { ErrorContext } from "../contexts/ErrorContext";
 
 function Shop() {
 	const [products, setProducts] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [brands, setBrands] = useState([]);
+	const [searchCat, setSearchCat] = useState([]);
+	const [searchBrand, setSearchBrand] = useState([]);
+
 	const { loading, setLoading } = useContext(LoadingContext);
-	const { search, setSearch } = useContext(SearchContext);
-	const { text } = search;
+	const { search, setSearch, initialState } = useContext(SearchContext);
+
 	const [searchParams, setSearchParams] = useSearchParams();
+	const { setError } = useContext(ErrorContext);
+	const { text, min, max, categoryId, brand } = search;
 
 	useEffect(() => {
 		setLoading(true);
@@ -31,21 +38,45 @@ function Shop() {
 	useEffect(() => {
 		const delayed = setTimeout(() => {
 			if (text && text.length >= 3) {
-				getProductsByFilter(search).then(res => setProducts(res.data));
+				getProductsBySearch(search).then(res => setProducts(res.data));
 			}
 		}, 1000);
 		return () => clearTimeout(delayed);
 	}, [text]);
 
+	useEffect(() => {
+		setSearch(prev => ({
+			...prev,
+			categoryId: searchCat,
+			brand: searchBrand,
+		}));
+	}, [searchCat, searchBrand]);
+
 	const loadProducts = () => {
+		setLoading(true);
 		if (!searchParams.get("text"))
 			getSomeProduct(12).then(res => {
 				setProducts(res.data);
 			});
+		setLoading(false);
 	};
 
 	const handleSubmit = e => {
 		e.preventDefault();
+		if (+min > +max) {
+			return setError("Invalid Price Range");
+		}
+		if (searchCat.length === 0 || searchBrand.length === 0) {
+			return setError("Both 'categories' and 'brands' are required");
+		}
+
+		getProductsByFilter(search).then(res => setProducts(res.data));
+	};
+
+	const handleClear = e => {
+		setSearch(initialState);
+		setSearchCat([]);
+		setSearchBrand([]);
 	};
 
 	const loadCategories = () => {
@@ -54,6 +85,35 @@ function Shop() {
 
 	const loadBrands = () => {
 		getProductBrands().then(res => setBrands(res.data));
+	};
+
+	const handleRangeChange = e => {
+		setSearch(prev => ({
+			...prev,
+			[e.target.name]: e.target.value,
+		}));
+	};
+
+	const handleCatChange = e => {
+		// console.log(e.target.checked);
+		setSearchCat(prev => {
+			if (e.target.checked) {
+				return [...prev, e.target.value];
+			} else {
+				return prev.filter(item => item !== e.target.value);
+			}
+		});
+	};
+
+	const handleBrandChange = e => {
+		// console.log(e.target.checked);
+		setSearchBrand(prev => {
+			if (e.target.checked) {
+				return [...prev, e.target.value];
+			} else {
+				return prev.filter(item => item !== e.target.value);
+			}
+		});
 	};
 
 	return (
@@ -86,12 +146,18 @@ function Shop() {
 													type="number"
 													className="form-control py-2"
 													placeholder="Min"
+													name="min"
+													value={min}
+													onChange={handleRangeChange}
 												/>
 
 												<input
 													type="number"
 													className="form-control"
 													placeholder="Max"
+													name="max"
+													value={max}
+													onChange={handleRangeChange}
 												/>
 											</div>
 										</div>
@@ -125,6 +191,8 @@ function Shop() {
 															className="form-check-input"
 															type="checkbox"
 															id={item.id}
+															value={item.id}
+															onClick={handleCatChange}
 														/>
 														<label
 															className="form-check-label"
@@ -161,6 +229,8 @@ function Shop() {
 															className="form-check-input"
 															type="checkbox"
 															id={item}
+															value={item}
+															onClick={handleBrandChange}
 														/>
 														<label className="form-check-label" htmlFor={item}>
 															{item}
@@ -172,25 +242,29 @@ function Shop() {
 								</div>
 							</div>
 							<div className="row justify-content-around m-1 mt-2 bg-white">
-								<div className="col-md-4">
+								<div className="col-4">
 									<button className="btn btn-outline-primary btn-sm btn-block">
 										SUBMIT
 									</button>
 								</div>
 
-								<div className="col-md-4">
+								<div className="col-6">
 									<button
 										className="btn btn-outline-danger btn-sm btn-block"
-										type="reset">
-										clear
+										type="reset"
+										onClick={handleClear}>
+										CLEAR ALL
 									</button>
 								</div>
 							</div>
 						</>
 					</form>
+					{/* {JSON.stringify(search)}
+					{JSON.stringify(searchCat)}
+					{JSON.stringify(searchBrand)} */}
 				</div>
 
-				<div className="col-md-9">
+				<div className="col-md-9 p-3">
 					{!loading && (
 						<>
 							<h4 className="text-danger">
