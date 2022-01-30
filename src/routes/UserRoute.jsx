@@ -2,8 +2,6 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { useContext } from "react";
-import { getRole } from "../services/localStorage";
-
 import Home from "../pages/Home";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
@@ -20,14 +18,14 @@ import AllProducts from "../pages/admin/product/AllProducts";
 import ProductUpdate from "../pages/admin/product/ProductUpdate";
 import Product from "../pages/Product";
 import CategoryHome from "../pages/category/CategoryHome";
+import Shop from "../pages/Shop";
 function UserRoute() {
 	const { user } = useContext(AuthContext);
-	const role = getRole();
 
 	return (
 		<Routes>
-			{role &&
-				(role === "admin" ? (
+			{user &&
+				(user.role === "admin" ? (
 					<>
 						<Route path="admin/dashboard" element={<AdminDashboard />} />
 						<Route path="admin/category" element={<CategoryCreate />} />
@@ -50,6 +48,8 @@ function UserRoute() {
 			<Route path="/product/:slug" element={<Product />} />
 			<Route path="/category/:slug" element={<CategoryHome />} />
 			<Route path="/" element={<Home />} />
+			<Route path="/shop/" element={<Shop />} />
+
 			{/* <Route path="*" element={<Navigate to="/" />} /> */}
 		</Routes>
 	);

@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useContext } from "react";
 import {
 	BsHouse,
+	BsShop,
 	BsPerson,
 	BsPersonPlus,
 	BsGear,
@@ -9,6 +10,7 @@ import {
 } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
+import Search from "../forms/Search";
 
 function Header() {
 	const [current, setCurrent] = useState("home");
@@ -44,10 +46,24 @@ function Header() {
 									<BsHouse className="me-1" /> Home
 								</Link>
 							</li>
+							<li className="nav-item ms-2">
+								<Link
+									className={
+										"nav-link " + (current === "home" ? "active" : null)
+									}
+									aria-current="page"
+									to="/shop"
+									onClick={e => setCurrent("home")}>
+									<BsShop className="me-1" /> Shop
+								</Link>
+							</li>
 						</ul>
+						<span className="navbar-nav me-2 mb-2 mb-lg-0">
+							<Search />
+						</span>
 
 						{user ? (
-							<ul className={"navbar-nav ms-auto me-5 mb-2 mb-lg-0 "}>
+							<ul className={"navbar-nav ms-2 me-5 mb-2 mb-lg-0 "}>
 								<li className="nav-item dropdown ms-2">
 									<Link
 										className={"nav-link dropdown-toggle "}

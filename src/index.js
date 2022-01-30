@@ -11,6 +11,7 @@ import ErrorContextProvider from "./contexts/ErrorContext";
 import ToastContextProvider from "./contexts/ToastContext";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingContextProvider from "./contexts/LoadingContext";
+import SearchContextProvider from "./contexts/SearchContext";
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -19,7 +20,9 @@ ReactDOM.render(
 				<LoadingContextProvider>
 					<ToastContextProvider>
 						<AuthContextProvider>
-							<App />
+							<SearchContextProvider>
+								<App />
+							</SearchContextProvider>
 						</AuthContextProvider>
 					</ToastContextProvider>
 				</LoadingContextProvider>

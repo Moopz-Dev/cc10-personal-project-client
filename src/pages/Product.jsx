@@ -44,7 +44,7 @@ function Product() {
 
 	const submitRating = () => {
 		rateProduct(slug, userRating)
-			.then(res => setMessage(res + "Thank you for your review."))
+			.then(res => setMessage("Thank you for your review."))
 			.catch(err => {
 				console.log("...");
 				setError(err.response.data);

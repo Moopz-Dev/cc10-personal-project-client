@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getOneCategory } from "../../apis/category";
-import Jumbotron from "../../components/cards/Jumbotron";
 import ProductCard from "../../components/cards/ProductCard";
 import { LoadingContext } from "../../contexts/LoadingContext";
 
 function CategoryHome() {
 	const [category, setCategory] = useState([]);
-	const [products, setProducts] = useState([]);
 	const { loading, setLoading } = useContext(LoadingContext);
 	const { slug } = useParams();
 
@@ -52,7 +50,7 @@ function CategoryHome() {
 							{category.SubCategories &&
 								category.SubCategories.map(item => (
 									<div
-										key={item.id}
+										key={item.name}
 										className="container bg-white rounded py-2 my-3">
 										<div className="row">
 											<div className="col-md-12 d-flex align-items-center justify-content-between">
@@ -74,14 +72,6 @@ function CategoryHome() {
 						</>
 					)}
 				</div>
-			</div>
-			<div className="row">
-				{products &&
-					products.map(item => (
-						<div className="col-4" key={item.id}>
-							<ProductCard product={item} />
-						</div>
-					))}
 			</div>
 		</div>
 	);

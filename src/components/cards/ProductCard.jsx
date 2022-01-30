@@ -15,16 +15,16 @@ function ProductCard({ product }) {
 	} = product;
 	return (
 		<>
-			<StarRating ratings={ratings} />
-			<div className="card">
+			<StarRating name={slug} ratings={ratings} />
+			<div className="card rounded">
 				<img
 					src={images && images.length ? images[0].imageUrl : placeholder}
-					className="card-img-top p-2"
+					className="card-img-top  img-fluid"
 					alt={title}
 					style={{ height: "250px", objectFit: "cover" }}
 				/>
 				<div className="card-body">
-					<h5 className="card-title">{`${title && title.slice(0, 30)}`}</h5>
+					<h6 className="card-title">{`${title && title.slice(0, 30)}`}</h6>
 					<p className="card-text">{`${
 						description && description.slice(0, 40)
 					}...`}</p>
@@ -33,8 +33,8 @@ function ProductCard({ product }) {
 						<Link
 							to={"/product/" + slug}
 							className="btn btn-warning col-md-5 m-auto">
-							<BsEye />
-							<div>View Product</div>
+							<BsEye className="" />
+							<div className="text-capitalize">View Product</div>
 						</Link>
 						<div className="vr" />
 						<button
@@ -42,7 +42,7 @@ function ProductCard({ product }) {
 							// onClick={() => handleRemove(slug)}
 						>
 							<BsCart4 />
-							<div>Add to Cart</div>
+							<div className="text-capitalize">Add to Cart</div>
 						</button>
 					</div>
 				</div>

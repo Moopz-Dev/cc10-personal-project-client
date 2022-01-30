@@ -2,14 +2,7 @@ import { createContext, useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../config/axios";
 
-import {
-	setToken,
-	clearToken,
-	getToken,
-	setRole,
-	clearRole,
-	getRole,
-} from "../services/localStorage";
+import { setToken, clearToken, getToken } from "../services/localStorage";
 import { ToastContext } from "./ToastContext";
 import { ErrorContext } from "./ErrorContext";
 import { LoadingContext } from "./LoadingContext";
@@ -53,7 +46,7 @@ function AuthContextProvider({ children }) {
 			setMessage("Login successful");
 			setToken(res.data.token);
 			setUser(res.data.user);
-			setRole(res.data.user.role);
+
 			setLoading(false);
 			roleBasedRedirect(res);
 			// window.location.reload();
@@ -66,7 +59,7 @@ function AuthContextProvider({ children }) {
 
 	const logout = () => {
 		clearToken();
-		clearRole();
+
 		setUser(null);
 		setMessage("You are logged out");
 		navigate("/login");

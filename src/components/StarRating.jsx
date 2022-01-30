@@ -1,7 +1,7 @@
 import React from "react";
 import StarRatings from "react-star-ratings";
 
-function StarRating({ ratings }) {
+function StarRating({ ratings, name }) {
 	const count = ratings && ratings.length;
 	const sum =
 		ratings &&
@@ -17,7 +17,7 @@ function StarRating({ ratings }) {
 			{ratings && count ? (
 				<span>
 					<StarRatings
-						name="rating"
+						name={name}
 						isSelectable={true}
 						starDimension="20px"
 						starSpacing="2px"

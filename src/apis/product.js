@@ -42,3 +42,11 @@ export const getOneProductRating = async slug => {
 export const getRelatedProducts = async slug => {
 	return await axios.get("/related-products/" + slug);
 };
+
+export const getProductsByFilter = async args => {
+	return await axios.post("/products/filters", args);
+};
+
+export const getProductBrands = async () => {
+	return await axios.get("/brand");
+};

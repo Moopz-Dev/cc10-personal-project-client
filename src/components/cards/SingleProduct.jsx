@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { BsCart4, BsHeart, BsStar } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { Modal } from "bootstrap";
@@ -8,8 +8,8 @@ import ProductListItems from "./ProductListItems";
 import Tab from "../Tab";
 import placeholder from "../../images/ProductPlaceholder.jpg";
 import StarRatings from "react-star-ratings";
-import { getRole } from "../../services/localStorage";
 import StarRating from "../StarRating";
+import { AuthContext } from "../../contexts/AuthContext";
 
 function SingleProduct({ product, changeRating, submitRating, userRating }) {
 	const {
@@ -19,9 +19,8 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 		ProductRatings: ratings,
 	} = product;
 	const [modal, setModal] = useState(null);
-
+	const { user } = useContext(AuthContext);
 	const modalEl = useRef();
-	const role = getRole();
 
 	const handleClickRating = () => {
 		const modalObject = new Modal(modalEl.current);
@@ -67,7 +66,7 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 								<BsHeart />
 								<div>Add to wishlist</div>
 							</Link>
-							{role && role === "user" && (
+							{user && user.role && user.role === "user" && (
 								<Link
 									to={"/product/" + slug}
 									className="btn btn-outline-info col m-auto">
@@ -112,6 +111,7 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 							<button
 								type="button"
 								className="btn btn-danger"
+								data-bs-dismiss="modal"
 								onClick={() => {
 									submitRating();
 								}}>

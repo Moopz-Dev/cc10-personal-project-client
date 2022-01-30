@@ -47,7 +47,7 @@ function NewArrivals() {
 				<div className="row">
 					{products &&
 						products.map(item => (
-							<div key={item.id} className="col-md-4">
+							<div key={item.id} className="col-md-4 h-25 d-inline-block">
 								<ProductCard product={item} />
 							</div>
 						))}
