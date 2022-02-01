@@ -3,18 +3,20 @@ import { BsCart4, BsHeart, BsStar } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { Modal } from "bootstrap";
 import { Carousel } from "react-responsive-carousel";
-
+import { addCartItems, getCartItems } from "../../apis/cart";
 import ProductListItems from "./ProductListItems";
 import Tab from "../Tab";
 import placeholder from "../../images/ProductPlaceholder.jpg";
 import StarRatings from "react-star-ratings";
 import StarRating from "../StarRating";
 import { AuthContext } from "../../contexts/AuthContext";
+import { CartContext } from "../../contexts/CartContext";
 
 function SingleProduct({ product, changeRating, submitRating, userRating }) {
 	const {
 		title,
 		ProductImages: images,
+		id,
 		slug,
 		ProductRatings: ratings,
 	} = product;
@@ -22,10 +24,18 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 	const { user } = useContext(AuthContext);
 	const modalEl = useRef();
 
+	const { setCart } = useContext(CartContext);
+
 	const handleClickRating = () => {
 		const modalObject = new Modal(modalEl.current);
 		setModal(modalObject);
 		modalObject.show();
+	};
+
+	const handleAddToCart = async e => {
+		addCartItems(id)
+			.then(res => getCartItems())
+			.then(res => setCart(res.data));
 	};
 
 	return (
@@ -54,8 +64,7 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 						<div className=" d-flex gap-3">
 							<button
 								className="btn btn-outline-danger col m-auto "
-								// onClick={() => handleRemove(slug)}
-							>
+								onClick={handleAddToCart}>
 								<BsCart4 />
 								<div>Add to Cart</div>
 							</button>

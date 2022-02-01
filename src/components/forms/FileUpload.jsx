@@ -16,7 +16,7 @@ function FileUpload({ values, setValues }) {
 			for (let i = 0; i < files.length; i++) {
 				Resizer.imageFileResizer(files[i], 1024, 1024, "WEBP", 100, 0, uri => {
 					axios
-						.post("/api/uploadimages", { image: uri })
+						.post("/uploadimages", { image: uri })
 						.then(res => {
 							// console.log("resData ", res);
 							allUploadedFiles.push(res.data);
@@ -31,7 +31,7 @@ function FileUpload({ values, setValues }) {
 	const handleImageRemove = imageUrl => {
 		setLoading(true);
 		axios
-			.post("/api/removeimages", { imageUrl })
+			.post("/removeimages", { imageUrl })
 			.then(res => {
 				setLoading(false);
 				const { images } = values;

@@ -19,6 +19,8 @@ import ProductUpdate from "../pages/admin/product/ProductUpdate";
 import Product from "../pages/Product";
 import CategoryHome from "../pages/category/CategoryHome";
 import Shop from "../pages/Shop";
+import Cart from "../pages/Cart";
+import Checkout from "../pages/Checkout";
 function UserRoute() {
 	const { user } = useContext(AuthContext);
 
@@ -41,6 +43,8 @@ function UserRoute() {
 						<Route path="user/history" element={<History />} />
 						<Route path="user/password" element={<Password />} />
 						<Route path="user/wishlist" element={<Wishlist />} />
+						<Route path="user/cart" element={<Cart />} />
+						<Route path="user/checkout" element={<Checkout />} />
 					</>
 				))}
 			<Route path="login" element={<Login />} />

@@ -1,23 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BsEye, BsCart4 } from "react-icons/bs";
 import { Link } from "react-router-dom";
-
 import StarRating from "../StarRating";
 import placeholder from "../../images/ProductPlaceholder.jpg";
+import { CartContext } from "../../contexts/CartContext";
+import { addCartItems, getCartItems } from "../../apis/cart";
 
 function ProductCard({ product }) {
 	const {
 		title,
 		price,
 		slug,
+		id,
 		ProductImages: images,
 		ProductRatings: ratings,
 	} = product;
 
-	const cart = [];
+	const { setCart } = useContext(CartContext);
 
-	const handleAddToCart = () => {
-		cart.push({ ...product, count: 1 });
+	const handleAddToCart = async e => {
+		addCartItems(id)
+			.then(res => getCartItems())
+			.then(res => setCart(res.data));
 	};
 
 	return (
@@ -38,15 +42,16 @@ function ProductCard({ product }) {
 						<Link
 							to={"/product/" + slug}
 							className="btn btn-warning col-md-5 m-auto">
-							<BsEye className="" />
+							<BsEye className="pe-none" />
 							<div className="text-capitalize">View Product</div>
 						</Link>
 						<div className="vr" />
 						<button
 							className="btn btn-danger col-md-5 m-auto "
+							role="button"
 							onClick={handleAddToCart}>
-							<BsCart4 />
-							<div className="text-capitalize">Add to Cart</div>
+							<BsCart4 className="pe-none" />
+							<div className="text-capitalize pe-none">Add to Cart</div>
 						</button>
 					</div>
 				</div>
