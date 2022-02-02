@@ -4,6 +4,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-quill/dist/quill.snow.css";
+import "react-datepicker/dist/react-datepicker.css";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";

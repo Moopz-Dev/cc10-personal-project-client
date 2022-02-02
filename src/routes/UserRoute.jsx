@@ -21,6 +21,8 @@ import CategoryHome from "../pages/category/CategoryHome";
 import Shop from "../pages/Shop";
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
+import CreateCoupon from "../pages/admin/coupon/CreateCoupon";
+import Payment from "../pages/Payment";
 function UserRoute() {
 	const { user } = useContext(AuthContext);
 
@@ -37,6 +39,7 @@ function UserRoute() {
 						<Route path="admin/product" element={<ProductCreate />} />
 						<Route path="admin/products" element={<AllProducts />} />
 						<Route path="admin/product/:slug" element={<ProductUpdate />} />
+						<Route path="admin/coupon" element={<CreateCoupon />} />
 					</>
 				) : (
 					<>
@@ -45,6 +48,7 @@ function UserRoute() {
 						<Route path="user/wishlist" element={<Wishlist />} />
 						<Route path="user/cart" element={<Cart />} />
 						<Route path="user/checkout" element={<Checkout />} />
+						<Route path="user/payment" element={<Payment />} />
 					</>
 				))}
 			<Route path="login" element={<Login />} />
