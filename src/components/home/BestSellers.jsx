@@ -19,7 +19,7 @@ function BestSellers() {
 
 	const loadAllProducts = () => {
 		setLoading(true);
-		getAllProduct("sold", "desc", page)
+		getAllProduct("sold", false, page)
 			.then(res => {
 				setProducts(res.data);
 				setLoading(false);

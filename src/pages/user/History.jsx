@@ -1,6 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getOrders } from "../../apis/user";
 import UserNav from "../../components/nav/UserNav";
+
 function History() {
+	const [orders, setOrders] = useState([]);
+
+	useEffect(() => {
+		loadOrders();
+	}, []);
+
+	const loadOrders = () => {
+		// getOrders().
+	};
+
 	return (
 		<div className="container-fluid">
 			<div className="row">

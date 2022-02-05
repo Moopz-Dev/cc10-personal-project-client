@@ -18,6 +18,7 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 		ProductImages: images,
 		id,
 		slug,
+		quantity,
 		ProductRatings: ratings,
 	} = product;
 	const [modal, setModal] = useState(null);
@@ -64,9 +65,10 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 						<div className=" d-flex gap-3">
 							<button
 								className="btn btn-outline-danger col m-auto "
-								onClick={handleAddToCart}>
+								onClick={handleAddToCart}
+								disabled={quantity < 1}>
 								<BsCart4 />
-								<div>Add to Cart</div>
+								<div> {quantity < 1 ? "Out of Stock" : "Add to Cart"}</div>
 							</button>
 
 							<Link

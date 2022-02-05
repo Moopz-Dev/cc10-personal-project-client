@@ -11,6 +11,7 @@ function ProductCard({ product }) {
 		title,
 		price,
 		slug,
+		quantity,
 		id,
 		ProductImages: images,
 		ProductRatings: ratings,
@@ -49,9 +50,12 @@ function ProductCard({ product }) {
 						<button
 							className="btn btn-danger col-md-5 m-auto "
 							role="button"
-							onClick={handleAddToCart}>
+							onClick={handleAddToCart}
+							disabled={quantity < 1}>
 							<BsCart4 className="pe-none" />
-							<div className="text-capitalize pe-none">Add to Cart</div>
+							<div className="text-capitalize pe-none">
+								{quantity < 1 ? "Out of Stock" : "Add to Cart"}
+							</div>
 						</button>
 					</div>
 				</div>

@@ -5,25 +5,29 @@ import { applyCoupon, getUserAddress, updateUserAddress } from "../apis/user";
 import { CartContext } from "../contexts/CartContext";
 import { ToastContext } from "../contexts/ToastContext";
 import ReactQuill from "react-quill";
-import { AuthContext } from "../contexts/AuthContext";
+// import { AuthContext } from "../contexts/AuthContext";
 import { ErrorContext } from "../contexts/ErrorContext";
 import { useNavigate } from "react-router-dom";
 
 function Checkout() {
-	const { cart, setCart } = useContext(CartContext);
+	const { cart } = useContext(CartContext);
 	const [coupon, setCoupon] = useState("");
 	const [discount, setDiscount] = useState(0);
+	const [total, setTotal] = useState(0);
+	const [discountedTotal, setDiscountedTotal] = useState(0);
 	const { setMessage } = useContext(ToastContext);
 	const { setError } = useContext(ErrorContext);
-	const { user } = useContext(AuthContext);
+	// const { user } = useContext(AuthContext);
 	const [address, setAddress] = useState("");
 	const navigate = useNavigate();
 
 	const getTotal = () => {
-		return cart.reduce((acc, item) => {
+		const newTotal = cart.reduce((acc, item) => {
 			return acc + item.Product.price * item.amount;
 		}, 0);
+		setTotal(newTotal);
 	};
+
 	const handleEmptyCart = () => {
 		if (window.confirm("Are you sure you want to empty your cart?")) {
 			emptyCartItems();
@@ -58,7 +62,13 @@ function Checkout() {
 
 	useEffect(() => {
 		loadAddress();
-	}, []);
+		getTotal();
+	}, [cart]);
+
+	useEffect(() => {
+		loadAddress();
+		setDiscountedTotal((total * (100 - discount)) / 100);
+	}, [discount]);
 
 	return (
 		<div>
@@ -91,12 +101,11 @@ function Checkout() {
 						/>
 						<button
 							onClick={applyDiscountCoupon}
-							disabled={coupon.length < 5}
+							disabled={coupon.length < 5 || discountedTotal}
 							className="btn btn-primary mt-3">
 							Apply
 						</button>
 					</div>
-
 					<div className="col-md-6 p-5">
 						<h4 className="p-3">Order Summary</h4>
 						<hr />
@@ -121,16 +130,16 @@ function Checkout() {
 									<span>
 										Total :{" "}
 										<span className="text-decoration-line-through text-danger">
-											$ {getTotal()}
+											$ {total}
 										</span>
 										<b>
-											{`--->`} $ {(getTotal() * (100 - discount)) / 100}
+											{`--->`} $ {discountedTotal}
 										</b>
 									</span>
 								</p>
 							) : (
 								<p>
-									Total : <b>$ {getTotal()}</b>
+									Total : <b>$ {total}</b>
 								</p>
 							)}
 						</div>
