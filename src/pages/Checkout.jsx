@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { emptyCartItems } from "../apis/cart";
-import { applyCoupon, getUserAddress, updateUserAddress } from "../apis/user";
+import { applyCoupon, createOrder } from "../apis/user";
 import { CartContext } from "../contexts/CartContext";
 import { ToastContext } from "../contexts/ToastContext";
 import ReactQuill from "react-quill";
 // import { AuthContext } from "../contexts/AuthContext";
 import { ErrorContext } from "../contexts/ErrorContext";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 function Checkout() {
-	const { cart } = useContext(CartContext);
+	const { cart, setCart } = useContext(CartContext);
 	const [coupon, setCoupon] = useState("");
 	const [discount, setDiscount] = useState(0);
 	const [total, setTotal] = useState(0);
@@ -19,7 +19,7 @@ function Checkout() {
 	const { setError } = useContext(ErrorContext);
 	// const { user } = useContext(AuthContext);
 	const [address, setAddress] = useState("");
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
 	const getTotal = () => {
 		const newTotal = cart.reduce((acc, item) => {
@@ -30,19 +30,9 @@ function Checkout() {
 
 	const handleEmptyCart = () => {
 		if (window.confirm("Are you sure you want to empty your cart?")) {
-			emptyCartItems();
+			emptyCartItems().then(res => setCart([]));
 			setMessage("Your cart has been emptied.");
 		}
-	};
-
-	const saveAddressToDb = () => {
-		updateUserAddress(address)
-			.then(res => setMessage("Your address has been saved"))
-			.catch(err => console.log(err));
-	};
-
-	const loadAddress = async () => {
-		getUserAddress().then(res => setAddress(res.data.address));
 	};
 
 	const applyDiscountCoupon = () => {
@@ -57,16 +47,24 @@ function Checkout() {
 	};
 
 	const handlePlaceOrder = () => {
-		navigate("/user/payment");
+		let code = null;
+		if (discountedTotal !== 0) {
+			code = coupon;
+		}
+
+		createOrder(code, address)
+			.then(res => {
+				setMessage("Order Created");
+				// navigate("/user/history");
+			})
+			.catch(err => console.log(err));
 	};
 
 	useEffect(() => {
-		loadAddress();
 		getTotal();
 	}, [cart]);
 
 	useEffect(() => {
-		loadAddress();
 		setDiscountedTotal((total * (100 - discount)) / 100);
 	}, [discount]);
 
@@ -84,12 +82,12 @@ function Checkout() {
 							onChange={setAddress}
 						/>
 						<br />
-						<button
+						{/* <button
 							className="btn btn-primary mt-2"
 							disabled={!address || address.length < 20}
 							onClick={saveAddressToDb}>
 							Save
-						</button>
+						</button> */}
 						<hr />
 						<h4>Got Coupon?</h4>
 						<br />
@@ -99,12 +97,21 @@ function Checkout() {
 							onChange={e => setCoupon(e.target.value)}
 							className="form-control"
 						/>
-						<button
-							onClick={applyDiscountCoupon}
-							disabled={coupon.length < 5 || discountedTotal}
-							className="btn btn-primary mt-3">
-							Apply
-						</button>
+						{discount ? (
+							<button
+								onClick={applyDiscountCoupon}
+								disabled
+								className="btn btn-success mt-3">
+								Coupon Applied
+							</button>
+						) : (
+							<button
+								onClick={applyDiscountCoupon}
+								disabled={coupon.length < 5 || discountedTotal}
+								className="btn btn-primary mt-3">
+								Apply
+							</button>
+						)}
 					</div>
 					<div className="col-md-6 p-5">
 						<h4 className="p-3">Order Summary</h4>
@@ -113,14 +120,15 @@ function Checkout() {
 							<h5 className="p-4 py-2">Products : {cart.length}</h5>
 							<hr />
 							<div className="px-4">
-								{cart.map(item => (
-									<p key={item.id}>
-										{item.Product.title}
-										{`(${item.Product.color})`} x {item.amount}
-										{" = "}
-										{item.Product.price * item.amount}
-									</p>
-								))}
+								{cart.length > 0 &&
+									cart.map(item => (
+										<p key={item.id}>
+											{item.Product.title}
+											{`(${item.Product.color})`} x {item.amount}
+											{" = "}
+											{item.Product.price * item.amount}
+										</p>
+									))}
 							</div>
 						</div>
 						<hr />
@@ -147,7 +155,7 @@ function Checkout() {
 							<div className="col-md-6  d-flex justify-content-center">
 								<button
 									className="btn btn-primary"
-									disabled={!address || address.length < 20}
+									disabled={!address || address.length < 20 || cart.length < 1}
 									onClick={handlePlaceOrder}>
 									Place Order
 								</button>

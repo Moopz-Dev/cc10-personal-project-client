@@ -29,7 +29,7 @@ function Cart() {
 						You currently have {cart.length} products in your cart.
 					</h6>
 					{!cart.length ? (
-						<p>
+						<p className="p-3">
 							No products in cart. <Link to="/shop"> Continue Shopping </Link>
 						</p>
 					) : (
@@ -72,6 +72,7 @@ function Cart() {
 					<hr />
 					<button
 						className="btn btn-block btn-sm btn-primary"
+						disabled={cart.length < 1}
 						onClick={handleCreateOrder}>
 						Proceed to Checkout
 					</button>
