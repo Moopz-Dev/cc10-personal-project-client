@@ -2,7 +2,7 @@ import React from "react";
 import Interweave from "interweave";
 
 function ShowPaymentInfo({ order, showStatus = true, handleCancel }) {
-	const { discount, OrderItems, id, status, address } = order;
+	const { discount, OrderItems, id, status, address, tracking } = order;
 	const getTotal = () => {
 		const newTotal = OrderItems.reduce((acc, item) => {
 			return acc + item.price * item.quantity;
@@ -11,7 +11,6 @@ function ShowPaymentInfo({ order, showStatus = true, handleCancel }) {
 	};
 
 	const trackUrl = "https://track.thailandpost.co.th/?trackNumber=";
-	const trackPath = "EF582568151TH";
 
 	return (
 		<>
@@ -79,7 +78,7 @@ function ShowPaymentInfo({ order, showStatus = true, handleCancel }) {
 									</span>
 									<span>
 										<a
-											href={trackUrl + trackPath}
+											href={trackUrl + tracking}
 											target="_blank"
 											className="ms-4 btn btn-warning btn-sm">
 											TRACK YOUR ORDER

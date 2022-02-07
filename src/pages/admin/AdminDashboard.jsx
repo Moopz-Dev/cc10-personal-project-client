@@ -18,11 +18,16 @@ function AdminDashboard() {
 	};
 
 	const handleStatusChange = (id, status) => {
-		updateOrder(id, status).then(res => {
-			setMessage("Order Status Updated");
-			loadOrders();
-		});
+		if (window.confirm("Confirm status update")) {
+			console.log(id);
+			console.log(status);
+			updateOrder(id, status).then(res => {
+				setMessage("Order Status Updated");
+				loadOrders();
+			});
+		}
 	};
+
 	return (
 		<div className="container-fluid">
 			<div className="row">

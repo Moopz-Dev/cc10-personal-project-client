@@ -7,10 +7,10 @@ import { ToastContext } from "../contexts/ToastContext";
 import ReactQuill from "react-quill";
 // import { AuthContext } from "../contexts/AuthContext";
 import { ErrorContext } from "../contexts/ErrorContext";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Checkout() {
-	const { cart, setCart } = useContext(CartContext);
+	const { cart, setCart, loadCart } = useContext(CartContext);
 	const [coupon, setCoupon] = useState("");
 	const [discount, setDiscount] = useState(0);
 	const [total, setTotal] = useState(0);
@@ -19,7 +19,7 @@ function Checkout() {
 	const { setError } = useContext(ErrorContext);
 	// const { user } = useContext(AuthContext);
 	const [address, setAddress] = useState("");
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const getTotal = () => {
 		const newTotal = cart.reduce((acc, item) => {
@@ -55,7 +55,8 @@ function Checkout() {
 		createOrder(code, address)
 			.then(res => {
 				setMessage("Order Created");
-				// navigate("/user/history");
+				loadCart();
+				navigate("/user/history");
 			})
 			.catch(err => console.log(err));
 	};

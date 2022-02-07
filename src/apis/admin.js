@@ -7,3 +7,7 @@ export const getOrders = async () => {
 export const updateOrder = async (id, status) => {
 	return await axios.put("/admin/order/" + id, { status });
 };
+
+export const updateTracking = async (id, tracking) => {
+	return await axios.put("/admin/ordertrack/" + id, { tracking });
+};

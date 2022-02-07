@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function AdminNav() {
 	return (
 		<nav>
-			<ul className="nav flex-column mt-3	">
+			<ul className="nav flex-column mt-3 p-3	">
 				<li className="nav-item">
 					<Link to="/admin/dashboard" className="nav-link">
 						Dashboard
@@ -37,11 +37,11 @@ function AdminNav() {
 						Coupon
 					</Link>
 				</li>
-				<li className="nav-item">
+				{/* <li className="nav-item">
 					<Link to="/user/password" className="nav-link">
 						Password
 					</Link>
-				</li>
+				</li> */}
 			</ul>
 		</nav>
 	);

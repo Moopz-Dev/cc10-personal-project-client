@@ -33,7 +33,7 @@ function Home() {
 			<Jumbotron
 				text={[
 					"Unleash the WEREWOLF Within !!!",
-					"Fresh Gadgets",
+					"Thanks to www.advice.co.th for all product pictures",
 					"The Hunt Begins !",
 				]}
 			/>

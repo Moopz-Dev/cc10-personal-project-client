@@ -11,13 +11,17 @@ function CartContextProvider({ children }) {
 
 	const [cart, setCart] = useState([]);
 	useEffect(() => {
+		loadCart();
+	}, [user]);
+
+	const loadCart = () => {
 		if (user && user.role && user.role === "user") {
 			getCartItems().then(res => setCart(res.data));
 		}
-	}, [user]);
+	};
 
 	return (
-		<CartContext.Provider value={{ cart, setCart }}>
+		<CartContext.Provider value={{ cart, setCart, loadCart }}>
 			{children}
 		</CartContext.Provider>
 	);

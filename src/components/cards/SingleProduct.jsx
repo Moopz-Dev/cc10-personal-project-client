@@ -41,8 +41,8 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 
 	return (
 		<>
-			<div className="col-md-7">
-				<Carousel showArrows={true} autoPlay infiniteLoop dynamicHeight>
+			<div className="col-md-4">
+				<Carousel showArrows={true} autoPlay infiniteLoop>
 					{images && images.length > 1 ? (
 						images.map(item => (
 							<div key={item.imageUrl}>
@@ -55,7 +55,7 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 				</Carousel>
 				<Tab product={product} />
 			</div>
-			<div className="col-md-5">
+			<div className="col-md-8">
 				<h4 className="bg-warning p-4 rounded">{title}</h4>
 				<StarRating ratings={ratings} />
 				<div className="card">

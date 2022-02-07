@@ -120,7 +120,9 @@ function Shop() {
 		<div className="container-fluid">
 			<div className="row">
 				<div className="col-md-3 p-3">
-					<form className="bg-white rounded py-2" onSubmit={handleSubmit}>
+					<form
+						className="bg-white rounded py-2 position-sticky"
+						onSubmit={handleSubmit}>
 						<>
 							<h6 className="text-secondary m-3">Search/Filter Products</h6>
 							<div className="accordion">

@@ -15,7 +15,6 @@ function Cart() {
 	const navigate = useNavigate();
 	const handleCreateOrder = () => {
 		//create order
-		setMessage("Your order has been created");
 		navigate("/user/checkout");
 	};
 	return (
