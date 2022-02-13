@@ -91,12 +91,12 @@ function ProductCreate() {
 		setValues({ ...values, category: e.target.value });
 	};
 	return (
-		<div className="container-fluid">
+		<div className="container-fluid mt-5">
 			<div className="row">
 				<div className="col-md-2">
 					<AdminNav />
 				</div>
-				<div className="col-md-10">
+				<div className="col-md-10 mt-4">
 					<h4>Product Create</h4>
 					<hr />
 					<div className="p-3">

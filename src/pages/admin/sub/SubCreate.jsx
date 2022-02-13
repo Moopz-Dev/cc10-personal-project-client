@@ -73,12 +73,12 @@ function SubCreate() {
 	const searched = keyword => item => item.name.toLowerCase().includes(keyword);
 
 	return (
-		<div className="container-fluid">
-			<div className="row">
+		<div className="mt-5 container-fluid ">
+			<div className="row ">
 				<div className="col-md-2">
 					<AdminNav />
 				</div>
-				<div className="col">
+				<div className="col mt-4">
 					<h4>Create Subcategory</h4>
 
 					<div className="form-group">

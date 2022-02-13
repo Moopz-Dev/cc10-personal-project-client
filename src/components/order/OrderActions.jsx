@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef } from "react";
+import { Modal } from "bootstrap";
 import { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -9,6 +10,8 @@ function OrderActions({ item, handleStatusChange }) {
 	const [tracking, setTracking] = useState("");
 	const [status, setStatus] = useState("");
 	const { setMessage } = useContext(ToastContext);
+	const [modal, setModal] = useState(null);
+	const modalEl = useRef();
 
 	useEffect(() => {
 		setStatus(item.status);
@@ -18,6 +21,11 @@ function OrderActions({ item, handleStatusChange }) {
 		updateTracking(item.id, tracking).then(res =>
 			setMessage("Tracking info updated")
 		);
+	};
+	const togglePaymentModal = () => {
+		const modalObject = new Modal(modalEl.current);
+		setModal(modalObject);
+		modalObject.show();
 	};
 
 	return (
@@ -49,7 +57,26 @@ function OrderActions({ item, handleStatusChange }) {
 						</button>
 					</div>
 				)}
-				{(status === "UNPROCESSED " || status === "DISPATCHED") && (
+				{status === "UNPROCESSED" && (
+					<>
+						<div className="col">
+							<button
+								className="btn btn-block btn-info btn-sm"
+								onClick={togglePaymentModal}>
+								VIEW SLIP
+							</button>
+						</div>
+						<div className="col">
+							<button
+								className="btn btn-block btn-danger btn-sm"
+								// onClick={() => handleCancel(id)}
+							>
+								Cancel
+							</button>
+						</div>
+					</>
+				)}
+				{status === "DISPATCHED" && (
 					<>
 						<div className="col-md-2">
 							<input
@@ -67,6 +94,31 @@ function OrderActions({ item, handleStatusChange }) {
 						</button>
 					</>
 				)}
+			</div>
+			<div className="modal" ref={modalEl}>
+				<div className="modal-dialog">
+					<div className="modal-content">
+						<div className="modal-header">
+							<h5 className="modal-title text-center">
+								View Customer's Payment Slip
+							</h5>
+							<button
+								type="button"
+								className="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div className="modal-body text-start">
+							<div className="container">
+								<img
+									className="img-fluid"
+									src={item.paymentSlip}
+									alt="payment slip"
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</>
 	);

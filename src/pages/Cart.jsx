@@ -18,7 +18,7 @@ function Cart() {
 		navigate("/user/checkout");
 	};
 	return (
-		<div className="container-fluid pt-2">
+		<div className="container-fluid mt-5 pt-2">
 			<div className="row"></div>
 
 			<div className="row">

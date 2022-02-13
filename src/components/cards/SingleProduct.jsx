@@ -21,12 +21,12 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 		quantity,
 		ProductRatings: ratings,
 	} = product;
-	const [modal, setModal] = useState(null);
 	const { user } = useContext(AuthContext);
-	const modalEl = useRef();
 
 	const { setCart } = useContext(CartContext);
 
+	const [modal, setModal] = useState(null);
+	const modalEl = useRef();
 	const handleClickRating = () => {
 		const modalObject = new Modal(modalEl.current);
 		setModal(modalObject);
@@ -41,7 +41,7 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 
 	return (
 		<>
-			<div className="col-md-4">
+			<div className="col-md-5">
 				<Carousel showArrows={true} autoPlay infiniteLoop>
 					{images && images.length > 1 ? (
 						images.map(item => (
@@ -53,9 +53,8 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 						<img src={placeholder} alt="placeholder" />
 					)}
 				</Carousel>
-				<Tab product={product} />
 			</div>
-			<div className="col-md-8">
+			<div className="col-md-7">
 				<h4 className="bg-warning p-4 rounded">{title}</h4>
 				<StarRating ratings={ratings} />
 				<div className="card">
@@ -91,6 +90,9 @@ function SingleProduct({ product, changeRating, submitRating, userRating }) {
 					</div>
 				</div>
 			</div>{" "}
+			<div className="container">
+				<Tab product={product} />
+			</div>
 			<div className="modal" ref={modalEl}>
 				<div className="modal-dialog">
 					<div className="modal-content">

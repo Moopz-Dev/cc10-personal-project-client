@@ -58,7 +58,7 @@ function SubUpdate() {
 	};
 
 	return (
-		<div className="container-fluid">
+		<div className="container-fluid mt-5">
 			<div className="row">
 				<div className="col-md-2">
 					<AdminNav />

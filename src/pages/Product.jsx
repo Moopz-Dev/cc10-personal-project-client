@@ -65,7 +65,7 @@ function Product() {
 	};
 
 	return (
-		<div className="container-fluid">
+		<div className=" m-5 mt-5 container">
 			<div className="row pt-4">
 				<SingleProduct
 					product={product}

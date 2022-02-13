@@ -64,12 +64,12 @@ function CategoryCreate() {
 	const searched = keyword => item => item.name.toLowerCase().includes(keyword);
 
 	return (
-		<div className="container-fluid">
+		<div className="container-fluid mt-5">
 			<div className="row">
 				<div className="col-md-2">
 					<AdminNav />
 				</div>
-				<div className="col">
+				<div className="col mt-4">
 					<h4>Create Category</h4>
 
 					<CategoryForm

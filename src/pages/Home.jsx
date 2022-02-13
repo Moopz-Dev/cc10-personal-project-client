@@ -31,6 +31,7 @@ function Home() {
 	return (
 		<>
 			<Jumbotron
+				className="mt-5"
 				text={[
 					"Unleash the WEREWOLF Within !!!",
 					"Thanks to www.advice.co.th for all product pictures",

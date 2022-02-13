@@ -119,7 +119,7 @@ function Shop() {
 	return (
 		<div className="container-fluid">
 			<div className="row">
-				<div className="col-md-3 p-3">
+				<div className="col-md-3 p-3 mt-5">
 					<form
 						className="bg-white rounded py-2 position-sticky"
 						onSubmit={handleSubmit}>

@@ -27,7 +27,7 @@ function History() {
 	};
 
 	return (
-		<div className="container-fluid">
+		<div className="container-fluid mt-5">
 			<div className="row">
 				<div className="col-md-2">
 					<UserNav />
@@ -38,7 +38,12 @@ function History() {
 					</h4>
 					{orders.map(item => (
 						<div key={item.id} className="m-5 p-3 card">
-							<ShowPaymentInfo order={item} handleCancel={handleCancel} />
+							<ShowPaymentInfo
+								order={item}
+								setOrders={setOrders}
+								handleCancel={handleCancel}
+								loadOrders={loadOrders}
+							/>
 
 							<OrderTable order={item} />
 						</div>

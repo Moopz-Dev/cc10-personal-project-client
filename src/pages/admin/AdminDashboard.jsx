@@ -29,7 +29,7 @@ function AdminDashboard() {
 	};
 
 	return (
-		<div className="container-fluid">
+		<div className=" mt-5 container-fluid">
 			<div className="row">
 				<div className="col-md-2">
 					<AdminNav />

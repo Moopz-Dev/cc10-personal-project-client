@@ -32,7 +32,7 @@ function Login() {
 		login(emailOrPhoneNumber, password);
 	};
 	return (
-		<div className="container p-5">
+		<div className="container  mt-5 p-5">
 			<div className="row">
 				<div className="col-md-6 offset-md-3">
 					<h4>Login</h4>

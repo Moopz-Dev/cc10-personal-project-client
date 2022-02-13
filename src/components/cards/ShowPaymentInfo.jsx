@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useState, useRef, useContext } from "react";
+import { Modal } from "bootstrap";
 import Interweave from "interweave";
+import SlipUpload from "../forms/SlipUpload";
 
-function ShowPaymentInfo({ order, showStatus = true, handleCancel }) {
+function ShowPaymentInfo({
+	order,
+	showStatus = true,
+	handleCancel,
+	setOrders,
+	loadOrders,
+}) {
 	const { discount, OrderItems, id, status, address, tracking } = order;
+	const [modal, setModal] = useState(null);
+	const modalEl = useRef();
 	const getTotal = () => {
 		const newTotal = OrderItems.reduce((acc, item) => {
 			return acc + item.price * item.quantity;
 		}, 0);
 		return newTotal;
+	};
+	const togglePaymentModal = () => {
+		const modalObject = new Modal(modalEl.current);
+		setModal(modalObject);
+		modalObject.show();
 	};
 
 	const trackUrl = "https://track.thailandpost.co.th/?trackNumber=";
@@ -52,7 +67,9 @@ function ShowPaymentInfo({ order, showStatus = true, handleCancel }) {
 										STATUS: {status}
 									</span>
 									<span>
-										<button className="ms-4 btn btn-primary btn-sm">
+										<button
+											className="ms-4 btn btn-primary btn-sm"
+											onClick={togglePaymentModal}>
 											Pay now
 										</button>
 										<button
@@ -99,9 +116,44 @@ function ShowPaymentInfo({ order, showStatus = true, handleCancel }) {
 			</div>
 			<div className="text-start bg-light p-2 mb-3">
 				<h6>Delivery Address:</h6>
-				<p className="p-2 ps-4">
+				<div className="p-2 ps-4">
+					{/* {JSON.stringify(address)} */}
 					<Interweave content={address} />
-				</p>
+				</div>
+			</div>
+			<div className="modal" ref={modalEl}>
+				<div className="modal-dialog">
+					<div className="modal-content">
+						<div className="modal-header">
+							<h5 className="modal-title text-center">
+								Upload your Payment Slip
+							</h5>
+							<button
+								type="button"
+								className="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div className="modal-body text-start">
+							<p>
+								Please transfer an amount of $$$ to one of the following bank
+								account.
+							</p>
+							<ul>
+								<li>K-BANK Account: 030-1122334</li>
+								<li>S-BANK Account: 133-6622334</li>
+								<li>B-BANK Account: 888-4433221</li>
+							</ul>
+							<p>Once completed, upload the payment slip using this form.</p>
+							<br />
+							<SlipUpload
+								order={order}
+								setOrders={setOrders}
+								loadOrders={loadOrders}
+							/>
+						</div>
+					</div>
+				</div>
 			</div>
 		</>
 	);

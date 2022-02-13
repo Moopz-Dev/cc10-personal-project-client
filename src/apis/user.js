@@ -23,3 +23,7 @@ export const getOrders = async () => {
 export const cancelOrder = async id => {
 	return await axios.delete("user/order/" + id);
 };
+
+export const updateOrderPayment = async (id, slip) => {
+	return await axios.patch("user/order" + id, { paymentSlip: slip });
+};

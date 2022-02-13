@@ -72,7 +72,7 @@ function Checkout() {
 	return (
 		<div>
 			{cart && (
-				<div className="row">
+				<div className="row mt-5">
 					<div className="col-md-6 p-5">
 						<h4>Delivery Address</h4>
 						<br />
@@ -82,6 +82,7 @@ function Checkout() {
 							value={address}
 							onChange={setAddress}
 						/>
+						{/* {JSON.stringify(address)} */}
 						<br />
 						{/* <button
 							className="btn btn-primary mt-2"

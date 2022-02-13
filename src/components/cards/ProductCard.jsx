@@ -33,7 +33,7 @@ function ProductCard({ product }) {
 					src={images && images.length ? images[0].imageUrl : placeholder}
 					className="card-img-top  img-fluid"
 					alt={title}
-					style={{ height: "400px", objectFit: "cover" }}
+					style={{ height: "200px", objectFit: "contain" }}
 				/>
 				<div className="card-body">
 					<h6 className="card-title">{`${title && title.slice(0, 30)}`}</h6>
